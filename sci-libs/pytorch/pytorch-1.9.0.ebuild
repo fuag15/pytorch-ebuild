@@ -61,9 +61,21 @@ DEPEND="
 	python? ( ${PYTHON_DEPS} )
 	redis? ( dev-db/redis )
 	rocm? (
-		dev-util/amd-rocm-meta
+		=dev-util/amd-rocm-meta-4.2.0
 		dev-util/rocm-cmake
+		dev-util/hip
 		dev-libs/rccl
+		sci-libs/rocBLAS
+		sci-libs/rocFFT
+		sci-libs/hipFFT
+		sci-libs/hipCUB
+		sci-libs/rocThrust
+		sci-libs/rocRAND
+		media-libs/hsa-amd-aqlprofile
+		dev-libs/rocm-comgr
+		dev-libs/rocm-device-libs
+		sci-libs/rocPRIM
+		sci-libs/hipSPARSE
 		sci-libs/miopen
 		dev-libs/roct-thunk-interface
 	)
@@ -92,6 +104,7 @@ PATCHES=(
 	"${FILESDIR}/1.8/Use-platform-dependent-LIBDIR-in-TorchConfig.cmake.in.patch"
 	"${FILESDIR}/Fix-path-to-torch_global_deps-library-in-installatio.patch"
 	"${FILESDIR}/1.9/Don-t-check-submodules-sanity.patch"
+	"${FILESDIR}/pytorch-1.9.0-hard-code-rocm-version-4.2.patch"
 )
 
 src_prepare() {
@@ -126,6 +139,7 @@ src_configure() {
 		export HIPCUB_PATH="/usr"
 		export ROCTHRUST_PATH="/usr"
 		export ROCTRACER_PATH="/usr"
+		epatch "${FILESDIR}/pytorch-1.9.0-hard-code-rocm-version-4.2.patch"
 	fi
 
 	local mycmakeargs=(

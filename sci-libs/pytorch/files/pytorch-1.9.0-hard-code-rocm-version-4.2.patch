@@ -1,0 +1,14 @@
+diff -Nur a/cmake/public/LoadHIP.cmake b/cmake/public/LoadHIP.cmake
+--- a/cmake/public/LoadHIP.cmake	2021-07-25 01:13:14.154662842 -0700
++++ b/cmake/public/LoadHIP.cmake	2021-07-25 01:13:49.977663234 -0700
+@@ -154,8 +154,8 @@
+   set(PYTORCH_FOUND_HIP TRUE)
+ 
+   # Find ROCM version for checks
+-  file(READ "${ROCM_PATH}/.info/version-dev" ROCM_VERSION_DEV_RAW)
+-  string(REGEX MATCH "^([0-9]+)\.([0-9]+)\.([0-9]+)-.*$" ROCM_VERSION_DEV_MATCH ${ROCM_VERSION_DEV_RAW})
++  #file(READ "${ROCM_PATH}/.info/version-dev" ROCM_VERSION_DEV_RAW)
++  string(REGEX MATCH "^([0-9]+)\.([0-9]+)\.([0-9]+)-.*$" ROCM_VERSION_DEV_MATCH "4.2.0-Gentoo")
+   if(ROCM_VERSION_DEV_MATCH)
+     set(ROCM_VERSION_DEV_MAJOR ${CMAKE_MATCH_1})
+     set(ROCM_VERSION_DEV_MINOR ${CMAKE_MATCH_2})
