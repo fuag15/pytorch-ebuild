@@ -1,0 +1,17 @@
+diff -Nur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2021-07-28 19:51:09.798638412 -0700
++++ b/CMakeLists.txt	2021-07-28 19:52:43.957704965 -0700
+@@ -70,6 +70,13 @@
+     file(GLOB ALL_SOURCES ${ALL_SOURCES} ${DIR}/*.*)
+ ENDFOREACH()
+ 
++# This is a hack, caffe2 cmake files are screwed up and dont correctly use
++# find_package for rocm targets
++find_package(hipfft)
++find_package(hiprand)
++find_package(hipsparse)
++find_package(rocblas)
++
+ add_library(${PROJECT_NAME} SHARED ${ALL_SOURCES})
+ target_link_libraries(${PROJECT_NAME} PRIVATE ${TORCH_LIBRARIES} ${PNG_LIBRARY} ${JPEG_LIBRARIES} Python3::Python)
+ set_target_properties(${PROJECT_NAME} PROPERTIES

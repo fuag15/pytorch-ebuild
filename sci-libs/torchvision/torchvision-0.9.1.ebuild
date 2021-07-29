@@ -31,9 +31,13 @@ DEPEND="
 		dev-python/scipy[${PYTHON_USEDEP}]
 		>=dev-python/pillow-4.1.1[${PYTHON_USEDEP}]
 	)
-	=sci-libs/pytorch-1.8.1[python?,cuda?]
+	=sci-libs/pytorch-1.9.0[python?,cuda?]
 "
 RDEPEND="${DEPEND}"
+
+PATCHES=(
+	"${FILESDIR}/torchvision-0.9.1-hack-around-caffee2-incorrect-cmake-file.patch"
+)
 
 src_unpack() {
 	unpack ${A}
@@ -41,6 +45,10 @@ src_unpack() {
 }
 
 src_configure() {
+	# rocm access to device
+	addwrite /dev/kfd
+	addpredict /dev/dri
+
 	local mycmakeargs=(
 		-DTORCH_INSTALL_PREFIX=/usr
 	)

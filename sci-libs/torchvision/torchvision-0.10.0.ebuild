@@ -35,12 +35,20 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/torchvision-0.9.1-hack-around-caffee2-incorrect-cmake-file.patch"
+)
+
 src_unpack() {
 	unpack ${A}
 	mv "${WORKDIR}/${P//torch/}" "${S}"
 }
 
 src_configure() {
+	# rocm access to device
+	addwrite /dev/kfd
+	addpredict /dev/dri
+
 	local mycmakeargs=(
 		-DTORCH_INSTALL_PREFIX=/usr
 	)
